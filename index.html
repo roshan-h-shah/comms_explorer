@@ -1,3 +1,4 @@
+<!-- ✅ FULLY CORRECTED HTML STARTS HERE -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,7 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-  <style>
+<style>
     body {
       font-family: 'Inter', Arial, sans-serif;
       background: linear-gradient(135deg, #e0e7ff 0%, #f8fafc 100%);
@@ -292,7 +293,6 @@
       try {
         const resp = await fetch('/raw_tables?user_query=' + encodeURIComponent(user_query));
         const data = await resp.json();
-        // Render raw tables
         rawSection.innerHTML = '<h2 style="margin-top:0;margin-bottom:10px;color:#6c63ff;font-size:1.25rem;">Raw Tables</h2>';
         data.raw_tables.forEach(tbl => {
           let html = `<div class='raw-table-card' style='overflow-x:auto;'><div class='raw-table-title'>${tbl.name}</div><div style='overflow-x:auto;'><table class='raw-table'><thead><tr>`;
@@ -304,7 +304,6 @@
           html += '</tbody></table></div></div>';
           rawSection.innerHTML += html;
         });
-        // Render filtered tables
         filteredSection.innerHTML = '<h2 style="margin-top:0;margin-bottom:10px;color:#38b6ff;font-size:1.25rem;">Filtered Tables</h2>';
         data.filtered_tables.forEach(tbl => {
           let html = `<div class='raw-table-card' style='overflow-x:auto;'><div class='raw-table-title'>${tbl.name}</div><div style='overflow-x:auto;'><table class='raw-table'><thead><tr>`;
@@ -322,30 +321,23 @@
       }
     }
 
-    // Initial fetch on page load
-    const userQueryInput = document.getElementById('user_query');
-    fetchAndRenderTables(userQueryInput.value);
-    // Refetch tables when user query changes and loses focus
-    userQueryInput.addEventListener('blur', (e) => {
-      fetchAndRenderTables(userQueryInput.value);
-    });
-
     const form = document.getElementById('reportForm');
     const status = document.getElementById('status');
     const reportDiv = document.getElementById('report');
+
     form.onsubmit = async (e) => {
       e.preventDefault();
       status.innerHTML = '<span class="spinner"></span>Running report...';
       status.className = "status loading";
       reportDiv.style.display = "none";
       reportDiv.innerHTML = "";
-      // Get selected OONI tests
+
       const test_names = Array.from(document.getElementById('test_names').selectedOptions).map(opt => opt.value);
       const user_query = document.getElementById('user_query').value;
       const only = document.getElementById('data_filter').value;
       const horizon = parseInt(document.getElementById('horizon').value, 10);
-      // Tables are fixed
       const sql_tables = ["mcc_mnc_table", "traforama_isp_list", "mideye_mobile_network_list"];
+
       try {
         const resp = await fetch('/run_report', {
           method: 'POST',
@@ -358,6 +350,7 @@
           status.className = "status";
           reportDiv.innerHTML = marked.parse(data.report);
           reportDiv.style.display = "block";
+          await fetchAndRenderTables(user_query); // ✅ Moved here
           window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
         } else {
           status.textContent = "Error: " + data.error;

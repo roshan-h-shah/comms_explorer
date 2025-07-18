@@ -6,7 +6,7 @@ import bryantask.final_truly_async as fta
 from bryantask import broadsqlasync
 from fastapi.responses import HTMLResponse
 import os
-
+import logging
 app = FastAPI()
 
 # Allow frontend to call API
@@ -39,37 +39,42 @@ async def run_report(req: ReportRequest):
     except Exception as e:
         return {"success": False, "error": str(e)}
 
+
+
 @app.get("/raw_tables")
 async def get_raw_tables(user_query: str = Query("Describe everything comparing india and pakistan")):
-    table_names = ["mcc_mnc_table", "traforama_isp_list", "mideye_mobile_network_list"]
-    raw_tables = []
-    filtered_tables = []
-    countries_list = []
-    # Get raw tables
-    for name in table_names:
-        df = fta.con.execute(f"SELECT * FROM {name} LIMIT 20").df()
-        columns = list(df.columns)
-        rows = df.values.tolist()
-        raw_tables.append({
-            "name": name,
-            "columns": columns,
-            "rows": rows
-        })
-    # Get filtered tables
-    for i, name in enumerate(table_names):
-        df = fta.con.execute(f"SELECT * FROM {name}").df()
-        if i == 0:
-            countries_list = await broadsqlasync.extract_relevant_rows(df, user_query)
-        filtered = broadsqlasync.filter_df(df, "Country", countries_list)
-        filtered = filtered.head(20)
-        columns = list(filtered.columns)
-        rows = filtered.values.tolist()
-        filtered_tables.append({
-            "name": name,
-            "columns": columns,
-            "rows": rows
-        })
-    return {"raw_tables": raw_tables, "filtered_tables": filtered_tables}
+    try:
+        table_names = ["mcc_mnc_table", "traforama_isp_list", "mideye_mobile_network_list"]
+        raw_tables = []
+        filtered_tables = []
+        countries_list = []
+
+        # --- Get raw tables ---
+        for name in table_names:
+            df = fta.con.execute(f"SELECT * FROM {name} LIMIT 20").df()
+            raw_tables.append({
+                "name": name,
+                "columns": list(df.columns),
+                "rows": df.values.tolist()
+            })
+
+        # --- Get filtered tables ---
+        for i, name in enumerate(table_names):
+            df = fta.con.execute(f"SELECT * FROM {name}").df()
+            if i == 0:
+                countries_list = await broadsqlasync.extract_relevant_rows(df, user_query)
+            filtered = broadsqlasync.filter_df(df, "Country", countries_list).head(20)
+            filtered_tables.append({
+                "name": name,
+                "columns": list(filtered.columns),
+                "rows": filtered.values.tolist()
+            })
+
+        return JSONResponse(content={"raw_tables": raw_tables, "filtered_tables": filtered_tables})
+
+    except Exception as e:
+        logging.exception("Error in /raw_tables route")
+        return JSONResponse(status_code=500, content={"error": str(e)})
 
 @app.get("/", response_class=HTMLResponse)
 async def serve_index():
