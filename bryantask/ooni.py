@@ -4,9 +4,17 @@ from bs4 import BeautifulSoup
 import logging
 from datetime import date, timedelta
 import math
+import os
 
 # Configure logging for better output and debugging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+
+def get_public_ip():
+    try:
+        import requests
+        return requests.get('https://api.ipify.org').text
+    except Exception:
+        return 'unknown'
 
 async def scrape_ooni_explorer(
     test_name: str,
@@ -26,6 +34,8 @@ async def scrape_ooni_explorer(
       country:   optional 2-letter probe_cc filter (defaults to '')
       only:      optional property filter: 'none' or 'anomalies' (defaults to '')
     """
+    # Log environment and public IP
+    logging.info(f"[ooni] ENV: {os.environ.get('ENV', 'local')}, public IP: {get_public_ip()}")
     # Build date range
     today = date.today() + timedelta(days=1)       # include today
     since = (today - timedelta(days=horizon)).isoformat()
@@ -45,7 +55,11 @@ async def scrape_ooni_explorer(
     browser = None
     try:
         async with async_playwright() as p:
-            browser = await p.chromium.launch(headless=True)
+            proxy = os.environ.get('OONI_PROXY')
+            launch_args = {"headless": True}
+            if proxy:
+                launch_args["proxy"] = {"server": proxy}
+            browser = await p.chromium.launch(**launch_args)
             page = await browser.new_page()
 
             # Load and wait for rows
@@ -114,10 +128,10 @@ async def scrape_ooni_explorer(
             markdown_table = "\n".join(md_lines)
             return markdown_table, anomaly_count, accessible_count
 
-    except Exception:
+    except Exception as e:
         logging.exception("Error scraping")
-        # Return empty table and zero counts on error
-        return "| Country | ASN | Timestamp | Test | Status |\n|---|---|---|---|---|\n", 0, 0
+        # Return error details in the markdown table
+        return f"| Error |\n|---|\n| {str(e)} |\n", 0, 0
 
     finally:
         if browser:
