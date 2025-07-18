@@ -23,6 +23,7 @@ RUN pip install -r requirements.txt
 
 # Install Playwright + Chromium
 RUN pip install playwright
+RUN playwright install --with-deps
 RUN playwright install chromium
 
 # Copy all app files
