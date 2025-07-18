@@ -1,0 +1,304 @@
+
+
+===== Device Type =====
+
+- desktop               55.367854
+- mobile                44.616144
+- other                 0.016002
+
+
+===== Ip Version =====
+
+- IPv4                  69.870636
+- IPv6                  30.129364
+
+
+===== Http Version =====
+
+- HTTP/2                49.226442
+- HTTP/1.x              29.7011
+- HTTP/3                21.072458
+
+
+===== Tls Version =====
+
+- TLS 1.3               68.409653
+- TLS QUIC              22.548882
+- TLS 1.2               8.885632
+- TLS 1.0               0.149448
+- TLS 1.1               0.006385
+
+
+===== Os =====
+
+- ANDROID               35.467127
+- WINDOWS               33.385861
+- IOS                   19.285663
+- MACOSX                8.567474
+- LINUX                 2.752194
+- CHROMEOS              0.50516
+- SMART_TV              0.036521
+
+
+===== Domain Popularity =====
+
+{
+  "rank": 1,
+  "domain": "google.com",
+  "categories": [
+    {
+      "id": 145,
+      "name": "Search Engines",
+      "superCategoryId": 26
+    }
+  ]
+}
+{
+  "rank": 2,
+  "domain": "googleapis.com",
+  "categories": [
+    {
+      "id": 109,
+      "name": "Information Technology",
+      "superCategoryId": 26
+    },
+    {
+      "id": 81,
+      "name": "Content Servers",
+      "superCategoryId": 26
+    }
+  ]
+}
+{
+  "rank": 3,
+  "domain": "gstatic.com",
+  "categories": [
+    {
+      "id": 81,
+      "name": "Content Servers",
+      "superCategoryId": 26
+    }
+  ]
+}
+{
+  "rank": 4,
+  "domain": "apple.com",
+  "categories": [
+    {
+      "id": 109,
+      "name": "Information Technology",
+      "superCategoryId": 26
+    },
+    {
+      "id": 155,
+      "name": "Technology",
+      "superCategoryId": 26
+    }
+  ]
+}
+{
+  "rank": 5,
+  "domain": "cloudflare.com",
+  "categories": [
+    {
+      "id": 155,
+      "name": "Technology",
+      "superCategoryId": 26
+    }
+  ]
+}
+{
+  "rank": 6,
+  "domain": "microsoft.com",
+  "categories": [
+    {
+      "id": 109,
+      "name": "Information Technology",
+      "superCategoryId": 26
+    },
+    {
+      "id": 75,
+      "name": "Business",
+      "superCategoryId": 3
+    }
+  ]
+}
+{
+  "rank": 7,
+  "domain": "facebook.com",
+  "categories": [
+    {
+      "id": 149,
+      "name": "Social Networks",
+      "superCategoryId": 24
+    }
+  ]
+}
+{
+  "rank": 8,
+  "domain": "googlevideo.com",
+  "categories": [
+    {
+      "id": 145,
+      "name": "Search Engines",
+      "superCategoryId": 26
+    },
+    {
+      "id": 164,
+      "name": "Video Streaming",
+      "superCategoryId": 7
+    }
+  ]
+}
+{
+  "rank": 9,
+  "domain": "amazonaws.com",
+  "categories": [
+    {
+      "id": 155,
+      "name": "Technology",
+      "superCategoryId": 26
+    }
+  ]
+}
+{
+  "rank": 10,
+  "domain": "fbcdn.net",
+  "categories": [
+    {
+      "id": 149,
+      "name": "Social Networks",
+      "superCategoryId": 24
+    }
+  ]
+}
+{
+  "rank": 11,
+  "domain": "whatsapp.net",
+  "categories": [
+    {
+      "id": 110,
+      "name": "Instant Messengers",
+      "superCategoryId": 12
+    },
+    {
+      "id": 111,
+      "name": "Internet Phone & VOIP",
+      "superCategoryId": 12
+    }
+  ]
+}
+{
+  "rank": 12,
+  "domain": "amazon.com",
+  "categories": [
+    {
+      "id": 88,
+      "name": "Ecommerce",
+      "superCategoryId": 22
+    }
+  ]
+}
+{
+  "rank": 13,
+  "domain": "doubleclick.net",
+  "categories": [
+    {
+      "id": 66,
+      "name": "Advertisements",
+      "superCategoryId": 1
+    }
+  ]
+}
+{
+  "rank": 14,
+  "domain": "youtube.com",
+  "categories": [
+    {
+      "id": 164,
+      "name": "Video Streaming",
+      "superCategoryId": 7
+    }
+  ]
+}
+{
+  "rank": 15,
+  "domain": "instagram.com",
+  "categories": [
+    {
+      "id": 149,
+      "name": "Social Networks",
+      "superCategoryId": 24
+    }
+  ]
+}
+{
+  "rank": 16,
+  "domain": "icloud.com",
+  "categories": [
+    {
+      "id": 95,
+      "name": "File Sharing",
+      "superCategoryId": 26
+    },
+    {
+      "id": 81,
+      "name": "Content Servers",
+      "superCategoryId": 26
+    }
+  ]
+}
+{
+  "rank": 17,
+  "domain": "googleusercontent.com",
+  "categories": [
+    {
+      "id": 81,
+      "name": "Content Servers",
+      "superCategoryId": 26
+    }
+  ]
+}
+{
+  "rank": 18,
+  "domain": "akadns.net",
+  "categories": [
+    {
+      "id": 81,
+      "name": "Content Servers",
+      "superCategoryId": 26
+    }
+  ]
+}
+{
+  "rank": 19,
+  "domain": "tiktokcdn.com",
+  "categories": [
+    {
+      "id": 81,
+      "name": "Content Servers",
+      "superCategoryId": 26
+    },
+    {
+      "id": 149,
+      "name": "Social Networks",
+      "superCategoryId": 24
+    }
+  ]
+}
+{
+  "rank": 20,
+  "domain": "ntp.org",
+  "categories": [
+    {
+      "id": 155,
+      "name": "Technology",
+      "superCategoryId": 26
+    },
+    {
+      "id": 101,
+      "name": "Government/Legal",
+      "superCategoryId": 9
+    }
+  ]
+}

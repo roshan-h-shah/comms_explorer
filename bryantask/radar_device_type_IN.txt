@@ -1,0 +1,2 @@
+summary_0: {'desktop': '55.367329', 'mobile': '44.616668', 'other': '0.016003'}
+meta: {'dateRange': [{'startTime': '2025-06-10T12:00:00Z', 'endTime': '2025-07-10T12:00:00Z'}], 'confidenceInfo': {'level': None, 'annotations': []}, 'normalization': 'PERCENTAGE', 'lastUpdated': '2025-07-10T12:30:00Z', 'units': [{'name': '*', 'value': 'requests'}]}
