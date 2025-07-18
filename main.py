@@ -7,6 +7,7 @@ from bryantask import broadsqlasync
 from fastapi.responses import HTMLResponse
 import os
 import logging
+from fastapi.responses import JSONResponse
 app = FastAPI()
 
 # Allow frontend to call API
