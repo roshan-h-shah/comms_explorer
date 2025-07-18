@@ -285,13 +285,16 @@
     <div id="filteredDataSection"></div>
   </div>
   <script>
-    async function fetchAndRenderTables(user_query) {
+     async function fetchAndRenderTables(user_query) {
       const rawSection = document.getElementById('rawDataSection');
       const filteredSection = document.getElementById('filteredDataSection');
       rawSection.innerHTML = '<div class="status loading"><span class="spinner"></span>Loading raw tables...</div>';
       filteredSection.innerHTML = '<div class="status loading"><span class="spinner"></span>Loading filtered tables...</div>';
       try {
         const resp = await fetch('/raw_tables?user_query=' + encodeURIComponent(user_query));
+        if (!resp.ok) {
+          throw new Error('Network response was not ok: ' + resp.status + ' ' + resp.statusText);
+        }
         const data = await resp.json();
         rawSection.innerHTML = '<h2 style="margin-top:0;margin-bottom:10px;color:#6c63ff;font-size:1.25rem;">Raw Tables</h2>';
         data.raw_tables.forEach(tbl => {
@@ -316,8 +319,8 @@
           filteredSection.innerHTML += html;
         });
       } catch (err) {
-        rawSection.innerHTML = '<div class="status error">Failed to load raw tables.</div>';
-        filteredSection.innerHTML = '<div class="status error">Failed to load filtered tables.</div>';
+        rawSection.innerHTML = `<div class="status error">Failed to load raw tables. ${err.message ? err.message : ''}</div>`;
+        filteredSection.innerHTML = `<div class="status error">Failed to load filtered tables. ${err.message ? err.message : ''}</div>`;
       }
     }
 
