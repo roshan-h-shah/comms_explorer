@@ -14,7 +14,9 @@ import ast
 # from datacenter import run_scrape_and_markdown # Not needed here, remove
 import asyncio
 # --- Init ---
-GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
+
+#GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
+GOOGLE_API_KEY = "AIzaSyAad2FjxtfnJji0eExh-LnwLaZ3cda4ITg"
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 

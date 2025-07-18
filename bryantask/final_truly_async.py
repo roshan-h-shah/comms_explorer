@@ -15,7 +15,7 @@ import asyncio
 import concurrent.futures  # For running blocking code in a thread pool
 
 # --- Init ---
-GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
+GOOGLE_API_KEY = "AIzaSyAad2FjxtfnJji0eExh-LnwLaZ3cda4ITg"
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
