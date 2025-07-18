@@ -8,8 +8,17 @@ from bs4 import BeautifulSoup
 import pandas as pd
 import logging
 from urllib.parse import urljoin
+import os
+import socket
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+
+def get_public_ip():
+    try:
+        import requests
+        return requests.get('https://api.ipify.org').text
+    except Exception:
+        return 'unknown'
 
 async def scrape_datacenter_cards_df(keyword: str) -> pd.DataFrame:
     web_format_keyword = keyword.replace(" ", "%20")
@@ -17,9 +26,16 @@ async def scrape_datacenter_cards_df(keyword: str) -> pd.DataFrame:
     url = f"https://www.datacenters.com/locations?query={web_format_keyword}"
     browser = None
 
+    # Log environment and public IP
+    logging.info(f"[datacenter] ENV: {os.environ.get('ENV', 'local')}, public IP: {get_public_ip()}")
+
     try:
         async with async_playwright() as p:
-            browser = await p.chromium.launch(headless=True)
+            proxy = os.environ.get('DATACENTER_PROXY')
+            launch_args = {"headless": True}
+            if proxy:
+                launch_args["proxy"] = {"server": proxy}
+            browser = await p.chromium.launch(**launch_args)
             page = await browser.new_page()
             # try to seem human like - helps a little
             await page.set_extra_http_headers({
@@ -86,9 +102,11 @@ async def scrape_datacenter_cards_df(keyword: str) -> pd.DataFrame:
 
             return df
 
-    except Exception:
+    except Exception as e:
         logging.exception(f"Error scraping {url}")
-        return pd.DataFrame(columns=["Name", "Type", "Address", "Link"])
+        return pd.DataFrame(columns=["Name", "Type", "Address", "Link", "error"]).append(
+            {"Name": "", "Type": "", "Address": "", "Link": "", "error": str(e)}, ignore_index=True
+        )
 
     finally:
         if browser:
