@@ -37,7 +37,6 @@ langchain-google-genai==2.1.8
 langchain-ollama==0.3.5
 langchain-text-splitters==0.3.8
 langsmith==0.4.7
-logging
 lxml==6.0.0
 MarkupSafe==3.0.2
 narwhals==1.47.1
