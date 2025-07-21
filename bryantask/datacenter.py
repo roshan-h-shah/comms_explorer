@@ -19,19 +19,9 @@ logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(
 project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 load_dotenv(os.path.join(project_root, '.env'))
 
-def get_public_ip():
-    try:
-        import requests
-        return requests.get('https://api.ipify.org').text
-    except Exception:
-        return 'unknown'
-
 async def scrape_datacenter_cards_df(keyword: str) -> pd.DataFrame:
     web_format_keyword = keyword.replace(" ", "%20")
     url = f"https://www.datacenters.com/locations?query={web_format_keyword}"
-
-    # Log environment and public IP
-    logging.info(f"[datacenter] ENV: {os.environ.get('ENV', 'local')}, public IP: {get_public_ip()}")
 
     try:
         api_key = os.environ.get("SCRAPERAPI_KEY")
@@ -40,8 +30,6 @@ async def scrape_datacenter_cards_df(keyword: str) -> pd.DataFrame:
         client = ScraperAPIClient(api_key)
         # Use render=True to enable JS rendering
         html_content = client.get(url=url, params={"render": True})
-        print(type(html_content))
-        print(html_content[0:100])
         soup = BeautifulSoup(html_content, "html.parser")
 
         card_sel = (
