@@ -18,7 +18,7 @@ logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(
 # Load environment variables from .env in the project root directory
 project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 load_dotenv(os.path.join(project_root, '.env'))
-
+    
 async def scrape_datacenter_cards_df(keyword: str) -> pd.DataFrame:
     web_format_keyword = keyword.replace(" ", "%20")
     url = f"https://www.datacenters.com/locations?query={web_format_keyword}"
@@ -59,7 +59,15 @@ async def scrape_datacenter_cards_df(keyword: str) -> pd.DataFrame:
         return df
 
     except Exception as e:
-        logging.exception(f"Error scraping {url}")
+        logging.error("==== Error Summary ====")
+        logging.error(f"URL: {url}")
+        logging.error(f"Keyword: {keyword}")
+        logging.error(f"Hostname: {socket.gethostname()}")
+        logging.error(f"Public IP: {get_public_ip()}")
+        logging.error(f"SCRAPERAPI_KEY Loaded: {'Yes' if api_key else 'No'}")
+        logging.error(f"Error Type: {type(e).__name__}")
+        logging.error(f"Error Message: {str(e)}")
+        logging.exception("Full traceback:")
         return pd.concat([
             pd.DataFrame(columns=["Name", "Type", "Address", "Link", "error"]),
             pd.DataFrame([{"Name": "", "Type": "", "Address": "", "Link": "", "error": str(e)}])
