@@ -8,6 +8,8 @@ from fastapi.responses import HTMLResponse
 import os
 import logging
 from fastapi.responses import JSONResponse
+from fastapi.exceptions import RequestValidationError
+from fastapi.exception_handlers import request_validation_exception_handler
 app = FastAPI()
 
 # Allow frontend to call API
@@ -23,7 +25,7 @@ class ReportRequest(BaseModel):
     user_query: str
     sql_tables: list[str]
     test_names: list[str]
-    only: str = ""
+    only_anomalies: bool = False
     horizon: int = 30
 
 @app.post("/run_report")
@@ -33,7 +35,7 @@ async def run_report(req: ReportRequest):
             user_query=req.user_query,
             sql_tables=req.sql_tables,
             test_names=req.test_names,
-            only=req.only,
+            only_anomalies=req.only_anomalies,
             horizon=req.horizon
         )
         return {"success": True, "report": result}
@@ -43,7 +45,7 @@ async def run_report(req: ReportRequest):
 
 
 @app.get("/raw_tables")
-async def get_raw_tables(user_query: str = Query("Describe everything comparing india and pakistan")):
+async def get_raw_tables(user_query: str = Query("Tell me all about Peru")):
     try:
         table_names = ["mcc_mnc_table", "traforama_isp_list", "mideye_mobile_network_list"]
         raw_tables = []
@@ -81,3 +83,11 @@ async def get_raw_tables(user_query: str = Query("Describe everything comparing 
 async def serve_index():
     with open("index.html", encoding="utf-8") as f:
         return f.read()
+
+
+@app.exception_handler(RequestValidationError)
+async def validation_exception_handler(request: Request, exc: RequestValidationError):
+    return JSONResponse(
+        status_code=422,
+        content={"detail": exc.errors(), "body": exc.body}
+    )

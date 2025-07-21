@@ -28,8 +28,9 @@ async def scrape_datacenter_cards_df(keyword: str) -> pd.DataFrame:
         if not api_key:
             raise ValueError("SCRAPERAPI_KEY environment variable not set in .env file.")
         client = ScraperAPIClient(api_key)
+        logging.info(f"Beginning Scraping Datacenter with Keyword: {keyword}")
         # Use render=True to enable JS rendering
-        html_content = client.get(url=url, params={"render": True})
+        html_content = client.get(url=url, params={"render": False})
         soup = BeautifulSoup(html_content, "html.parser")
 
         card_sel = (
@@ -63,7 +64,6 @@ async def scrape_datacenter_cards_df(keyword: str) -> pd.DataFrame:
         logging.error(f"URL: {url}")
         logging.error(f"Keyword: {keyword}")
         logging.error(f"Hostname: {socket.gethostname()}")
-        logging.error(f"Public IP: {get_public_ip()}")
         logging.error(f"SCRAPERAPI_KEY Loaded: {'Yes' if api_key else 'No'}")
         logging.error(f"Error Type: {type(e).__name__}")
         logging.error(f"Error Message: {str(e)}")

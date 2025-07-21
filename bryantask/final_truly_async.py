@@ -43,12 +43,12 @@ async def async_run_scrape_and_markdown_wrapper(countries_list: list[str]) -> st
     logger.info(f"[DC] Asynchronously scraping data centers for: {countries_list}")
     return await run_blocking_in_executor(run_scrape_and_markdown, countries_list)
 
-async def async_scrape_ooni_explorer_wrapper(test_name: str, country: str, only: str, horizon: int) -> tuple[str, int, int]:
+async def async_scrape_ooni_explorer_wrapper(test_name: str, horizon: int, country: str, only_anomalies: bool) -> tuple[str, int, int]:
     return await scrape_ooni_explorer(
         test_name=test_name,
+        horizon=horizon,
         country=country,
-        only=only,
-        horizon=horizon
+        only_anomalies=only_anomalies
     )
 
 async def async_fetch_and_format_markdown_wrapper(country: str = "", date_range: str = "30d") -> str:
@@ -160,7 +160,7 @@ async def async_combined_pipeline(
     user_query: str,
     sql_tables: list[str],
     test_names: list[str],
-    only: str = "",
+    only_anomalies: bool = False,
     horizon: int = 30
 ) -> str:
     report_parts = {}
@@ -192,7 +192,7 @@ async def async_combined_pipeline(
             alpha2 = get_alpha2_from_country_name(country) or ""
             if not alpha2: continue
             task = asyncio.create_task(
-                async_scrape_ooni_explorer_wrapper(test_name, alpha2, only, horizon)
+                async_scrape_ooni_explorer_wrapper(test_name, horizon, alpha2, only_anomalies)
             )
             ooni_tasks.append((test_name, country, task))
 
@@ -263,10 +263,10 @@ async def combined_pipeline(
     user_query: str,
     sql_tables: list[str],
     test_names: list[str],
-    only: str = "",
+    only_anomalies: str = "",
     horizon: int = 30
 ) -> str:
-    return await async_combined_pipeline(user_query, sql_tables, test_names, only, horizon)
+    return await async_combined_pipeline(user_query, sql_tables, test_names, only_anomalies, horizon)
 
 # ----------------------------------------
 # CLI runner
@@ -277,7 +277,7 @@ if __name__ == "__main__":
         user_query="United States of America",
         sql_tables=tables,
         test_names=["signal", "whatsapp"],
-        only="",
+        only_anomalies=False,
         horizon=30
     ))
     print(report)
