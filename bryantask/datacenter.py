@@ -51,6 +51,10 @@ async def scrape_datacenter_cards_df(keyword: str) -> pd.DataFrame:
         df = pd.DataFrame(rows)
         logging.info(f"[{keyword}] scraped {len(df)} rows before filtering")
 
+        if df.empty or "Address" not in df.columns:
+            logging.warning(f"[{keyword}] No usable data found — skipping filtering.")
+            return pd.DataFrame(columns=["Name", "Type", "Address", "Link"])
+
         # filter by country
         df["_country"] = df["Address"].apply(lambda a: a.split(",")[-1].strip().lower())
         df.loc[df["_country"] == "usa", "_country"] = "united states"

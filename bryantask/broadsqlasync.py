@@ -14,7 +14,9 @@ import ast
 # from datacenter import run_scrape_and_markdown # Not needed here, remove
 import asyncio
 # --- Init ---
-
+import os
+from dotenv import load_dotenv
+from langchain_openai import ChatOpenAI
 #GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
 GOOGLE_API_KEY = "AIzaSyAad2FjxtfnJji0eExh-LnwLaZ3cda4ITg"
 logging.basicConfig(level=logging.INFO)
@@ -30,7 +32,18 @@ llm = ChatGoogleGenerativeAI(
     google_api_key=GOOGLE_API_KEY,
     temperature=0
 )
+project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+load_dotenv(os.path.join(project_root, '.env'))
 
+open_ai_api_key = os.environ.get("OPENAI_API_KEY")
+if not open_ai_api_key:
+    raise ValueError("OpenAI environment variable not set in .env file.")
+
+llm = ChatOpenAI(
+    model="gpt-4.1-nano",  # This is the GPT-4.1 "Turbo" model
+    openai_api_key=open_ai_api_key,
+  
+)
 # ----------------------------------------
 # Async query wrapper
 # ----------------------------------------

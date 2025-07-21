@@ -13,6 +13,8 @@ from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain.prompts import PromptTemplate
 import asyncio
 import concurrent.futures  # For running blocking code in a thread pool
+from dotenv import load_dotenv
+
 
 # --- Init ---
 GOOGLE_API_KEY = "AIzaSyAad2FjxtfnJji0eExh-LnwLaZ3cda4ITg"
@@ -33,9 +35,16 @@ llm = ChatGoogleGenerativeAI(
 from langchain_openai import ChatOpenAI
 import os
 
+project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+load_dotenv(os.path.join(project_root, '.env'))
+
+open_ai_api_key = os.environ.get("OPENAI_API_KEY")
+if not open_ai_api_key:
+    raise ValueError("OpenAI environment variable not set in .env file.")
+
 llm = ChatOpenAI(
     model="gpt-4.1-nano",  # This is the GPT-4.1 "Turbo" model
-    openai_api_key=os.environ["OPENAI_API_KEY"],
+    openai_api_key=open_ai_api_key,
   
 )
 
