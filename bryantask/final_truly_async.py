@@ -30,6 +30,16 @@ llm = ChatGoogleGenerativeAI(
     temperature=0
 )
 
+from langchain_openai import ChatOpenAI
+import os
+
+llm = ChatOpenAI(
+    model="gpt-4.1-nano",  # This is the GPT-4.1 "Turbo" model
+    openai_api_key=os.environ["OPENAI_API_KEY"],
+  
+)
+
+
 # ----------------------------------------
 # Async-compatible Data Fetchers & LLM Callers
 # ----------------------------------------
