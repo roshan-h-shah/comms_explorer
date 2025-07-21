@@ -67,7 +67,8 @@ async def scrape_ooni_explorer(
     md_lines.append(f"**Total rows:** {math.ceil(len(rows)/2)}")
     md_lines.append(f"**Anomalies:** {int(anomaly_count/2)}")
     md_lines.append(f"**Accessible:** {math.ceil(accessible_count/2)}")
-    logging.info(f"Scraped From OONI API: {'\n'.join(md_lines)}")
+    res = "\n".join(md_lines)
+    logging.info(f"Scraped From OONI API: {res}")
     return "\n".join(md_lines), anomaly_count, accessible_count
 import asyncio
 
