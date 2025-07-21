@@ -71,7 +71,6 @@ async def scrape_datacenter_cards_df(keyword: str) -> pd.DataFrame:
         return df
 
     except Exception as e:
-    except Exception as e:
         logging.exception(f"Error scraping {url}")
         return pd.concat([
             pd.DataFrame(columns=["Name", "Type", "Address", "Link", "error"]),
