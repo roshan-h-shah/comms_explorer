@@ -28,9 +28,11 @@ ENDPOINTS = {
     "domain_popularity": "/ranking/top",
 }
 
+#added parameter to control entries in a ranked data type
 async def fetch_and_format_markdown(
     country: str = "",
-    date_range: str = "30d"
+    date_range: str = "30d",
+    rank_limit: int = 20
 ) -> str:
     """
     Fetches each metric in ENDPOINTS asynchronously and builds one Markdown report string.
@@ -49,7 +51,7 @@ async def fetch_and_format_markdown(
 
             if metric == "domain_popularity":
                 params["name"] = "top"
-                params["limit"] = 20
+                params["limit"] = rank_limit
             
             
 
@@ -147,7 +149,4 @@ if __name__ == "__main__":
     async def main():
         md_report = await fetch_and_format_markdown(country="IN", date_range="30d")
         print(md_report)
-        with open("radar_report_IN_30d.md", "w", encoding="utf-8") as f:
-            f.write(md_report)
-
     asyncio.run(main())
