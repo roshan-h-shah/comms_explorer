@@ -85,7 +85,7 @@ mobile network operators and ISPs for various countries:
 {sql_context}
 
 **Task**  
-Produce a **country-by-country** summary in Markdown.  For each country:
+Produce a summary by country in Markdown.  For each country:
 - List **Mobile Network Operators** (from the MCC/MNC table).
 - List **Internet Service Providers** (from the traforama and mideye tables).
 - Group them under a third-level heading (`### CountryName`).
@@ -229,7 +229,7 @@ async def async_combined_pipeline(
 
     # 2) Generate SQL section
     sql_ans = await answer_sql_section(user_query, sql_context)
-    report_parts["sql"] = f"## SQL Data\n{sql_ans}"
+    report_parts["sql"] = f"## Telecommunications and ISP Summary\n{sql_ans}"
     logger.info("Generated SQL section.")
 
     # 3) Wait for DC, OONI & Radar in parallel
@@ -259,7 +259,7 @@ async def async_combined_pipeline(
             ooni_lines.append(f"| {country} | {test_name.title()} | {anomalies} | {accessible} |")
     ooni_context = "\n".join(ooni_lines) if len(ooni_lines)>1 else "No OONI data found."
     ooni_ans = await answer_ooni_section(ooni_context)
-    report_parts["ooni"] = f"## OONI Explorer Results\n{ooni_ans}"
+    report_parts["ooni"] = f"## Communications Tests (OONI Explorer)\n{ooni_ans}"
 
     # 6) Process Radar
     radar_blocks = []
@@ -270,7 +270,7 @@ async def async_combined_pipeline(
             radar_blocks.append(res)
     radar_context = "\n\n".join(radar_blocks) or "No Radar data found."
     radar_ans = await answer_radar_section(radar_context, date_range)
-    report_parts["radar"] = f"## Cloudflare Radar\n{radar_ans}"
+    report_parts["radar"] = f"## Device and Domain Data (Cloudflare Radar)\n{radar_ans}"
 
     # 7) Stitch report
     return "\n\n".join(report_parts.values())

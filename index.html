@@ -177,7 +177,7 @@
         if (!resp.ok) throw new Error('Network response was not ok: ' + resp.status);
         const data = await resp.json();
 
-        rawSection.innerHTML = '<h2 style="color:#6c63ff;font-size:1.25rem;">Raw Tables</h2>';
+        rawSection.innerHTML = '<h2 style="color:#6c63ff;font-size:1.25rem;">Raw SQL Tables</h2>';
         data.raw_tables.forEach(tbl => {
           let html = `<div class="raw-table-card"><div class="raw-table-title">${tbl.name}</div>`;
           html += `<div class="scrollable-table-wrapper"><table class="raw-table"><thead><tr>`;
@@ -188,7 +188,7 @@
           rawSection.innerHTML += html;
         });
 
-        filteredSection.innerHTML = '<h2 style="color:#38b6ff;font-size:1.25rem;">Filtered Tables</h2>';
+        filteredSection.innerHTML = '<h2 style="color:#38b6ff;font-size:1.25rem;">Filtered SQL Tables</h2>';
         data.filtered_tables.forEach(tbl => {
           let html = `<div class="raw-table-card"><div class="raw-table-title">${tbl.name}</div>`;
           html += `<div class="scrollable-table-wrapper"><table class="raw-table"><thead><tr>`;
