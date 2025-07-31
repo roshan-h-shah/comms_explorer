@@ -1,5 +1,7 @@
+'''
+Goes from country to country code and vice versa (certain websites need the Alpha-2 country code instead of the name of the country)
+'''
 import pycountry
-
 # --- Country Name to ISO 3166-1 Alpha-2 Code ---
 def get_alpha2_from_country_name(country_name):
     try:
@@ -31,6 +33,3 @@ def get_country_name_from_alpha2(alpha2_code):
     except KeyError:
         return None
 
-# Test cases
-print("--- Using pycountry ---")
-print(f"'India' to Alpha-2: {get_alpha2_from_country_name('India')}")

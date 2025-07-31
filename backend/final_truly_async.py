@@ -1,15 +1,17 @@
+'''
+Orchestration pipeline from all the scrapers, SQL handlers and LLM calls - this is the bulk of the code
+'''
 import os
 import logging
 import duckdb
 from backend import broadsqlasync
 from backend import asynccloudflare
-from backend.datacenter import run_scrape_and_markdown  # Needs wrapper
-from backend.ooni import scrape_ooni_explorer      # Already async
-
+from backend.datacenter import run_scrape_and_markdown 
+from backend.ooni import scrape_ooni_explorer   
 from backend.country_code_converter import get_alpha2_from_country_name
 from langchain.prompts import PromptTemplate
 import asyncio
-import concurrent.futures  # For running blocking code in a thread pool
+import concurrent.futures  
 from dotenv import load_dotenv
 
 # --- Init ---
@@ -35,7 +37,6 @@ llm = ChatOpenAI(
     openai_api_key=open_ai_api_key,
   
 )
-
 
 # ----------------------------------------
 # Async-compatible Data Fetchers & LLM Callers

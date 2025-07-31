@@ -1,9 +1,7 @@
+'''
+Takes user's natural language query -> list of countries -> filtering the SQL tables based on these countries asynchronously
+'''
 
-#TRULY ASYNC HOPING:
-# broadsql.py (Updated to be async for LLM interactions)
-
-# from langchain_ollama import ChatOllama # Not used, removed
-from langchain_google_genai import ChatGoogleGenerativeAI
 import pandas as pd
 import duckdb
 import logging
@@ -11,14 +9,12 @@ import os
 from langchain.prompts import PromptTemplate
 import re
 import ast
-# from datacenter import run_scrape_and_markdown # Not needed here, remove
 import asyncio
 # --- Init ---
 import os
 from dotenv import load_dotenv
 from langchain_openai import ChatOpenAI
-#GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
-GOOGLE_API_KEY = "AIzaSyAad2FjxtfnJji0eExh-LnwLaZ3cda4ITg"
+
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
@@ -26,12 +22,6 @@ logger = logging.getLogger(__name__)
 db_path = os.path.join(os.path.dirname(__file__), "bryan.db")
 con = duckdb.connect(db_path)
 
-# LLM Setup
-llm = ChatGoogleGenerativeAI(
-    model="gemini-2.5-flash",
-    google_api_key=GOOGLE_API_KEY,
-    temperature=0
-)
 project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 load_dotenv(os.path.join(project_root, '.env'))
 
@@ -40,7 +30,7 @@ if not open_ai_api_key:
     raise ValueError("OpenAI environment variable not set in .env file.")
 
 llm = ChatOpenAI(
-    model="gpt-4.1-nano",  # This is the GPT-4.1 "Turbo" model
+    model="gpt-4.1-nano",  
     openai_api_key=open_ai_api_key,
   
 )

@@ -1,10 +1,12 @@
+'''
+Scrapes tables from Traforama website into SQL tables - makes it faster instead of web-scraping everything at inference
+'''
 import asyncio
 from playwright.async_api import async_playwright
 from bs4 import BeautifulSoup
 import csv
 import logging
 import duckdb
-import pandas as pd
 # Configure logging for better output and debugging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
@@ -126,5 +128,3 @@ logging.info("Data saved successfully to traforama_isp_list.db")
 
 if __name__ == "__main__":
     asyncio.run(scrape_traforama_isp_list_playwright(target_url))
-
-#Good - could be cleaned but not sure how neccesary ot is for Rag

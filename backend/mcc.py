@@ -1,7 +1,9 @@
+'''
+Scrapes tables from MCC website into SQL tables - makes it faster instead of web-scraping everything at inference
+'''
 import asyncio
 from playwright.async_api import async_playwright
 from bs4 import BeautifulSoup
-import csv
 import logging
 import duckdb
 import pandas as pd

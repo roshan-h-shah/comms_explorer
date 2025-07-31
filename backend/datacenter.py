@@ -1,9 +1,7 @@
-
-#Code to avoid backoff errors:
-# KEEPS GETTING URL BLOCKED!
-#basically have to change vpn on off/change server every once in a while
+'''
+Scrapes from datacenters.com - this is the hardest scraping task - hard website to scrape + can get backoff or timeout errors
+'''
 import asyncio
-from playwright.async_api import async_playwright, TimeoutError as PlaywrightTimeoutError
 from bs4 import BeautifulSoup
 import pandas as pd
 import logging

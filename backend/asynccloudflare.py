@@ -1,7 +1,6 @@
-#full async hope!
-
-
-import os
+'''
+Asynchronously fetches Cloudflare Radar Data using Cloudflare's API
+'''
 import logging
 import httpx  # <-- Changed from 'requests' to 'httpx'
 import json

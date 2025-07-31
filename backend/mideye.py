@@ -1,3 +1,6 @@
+'''
+Scrapes tables from Mideye website into SQL tables - makes it faster instead of web-scraping everything at inference
+'''
 import requests
 from bs4 import BeautifulSoup
 import csv
