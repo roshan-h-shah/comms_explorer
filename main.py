@@ -2,8 +2,8 @@ from fastapi import FastAPI, Request, Query
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 import asyncio
-import bryantask.final_truly_async as fta
-from bryantask import broadsqlasync
+import backend.final_truly_async as fta
+from backend import broadsqlasync
 from fastapi.responses import HTMLResponse
 import os
 import logging

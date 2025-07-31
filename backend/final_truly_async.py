@@ -1,12 +1,12 @@
 import os
 import logging
 import duckdb
-from bryantask import broadsqlasync
-from bryantask import asynccloudflare
-from bryantask.datacenter import run_scrape_and_markdown  # Needs wrapper
-from bryantask.ooni import scrape_ooni_explorer      # Already async
+from backend import broadsqlasync
+from backend import asynccloudflare
+from backend.datacenter import run_scrape_and_markdown  # Needs wrapper
+from backend.ooni import scrape_ooni_explorer      # Already async
 
-from bryantask.country_code_converter import get_alpha2_from_country_name
+from backend.country_code_converter import get_alpha2_from_country_name
 from langchain.prompts import PromptTemplate
 import asyncio
 import concurrent.futures  # For running blocking code in a thread pool
