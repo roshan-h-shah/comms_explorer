@@ -1,5 +1,3 @@
-# final_truly_async.py (Changes highlighted)
-
 import os
 import logging
 import duckdb
@@ -9,28 +7,18 @@ from bryantask.datacenter import run_scrape_and_markdown  # Needs wrapper
 from bryantask.ooni import scrape_ooni_explorer      # Already async
 
 from bryantask.country_code_converter import get_alpha2_from_country_name
-from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain.prompts import PromptTemplate
 import asyncio
 import concurrent.futures  # For running blocking code in a thread pool
 from dotenv import load_dotenv
 
-
 # --- Init ---
-GOOGLE_API_KEY = "AIzaSyAad2FjxtfnJji0eExh-LnwLaZ3cda4ITg"
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 # Connect to DuckDB database
 DB_PATH = os.path.join(os.path.dirname(__file__), "bryan.db")
 con = duckdb.connect(DB_PATH)
-
-# LLM Setup (async-capable)
-llm = ChatGoogleGenerativeAI(
-    model="gemini-2.5-flash",
-    google_api_key=GOOGLE_API_KEY,
-    temperature=0
-)
 
 from langchain_openai import ChatOpenAI
 import os
