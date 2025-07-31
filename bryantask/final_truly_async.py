@@ -148,7 +148,7 @@ The data is a series of metrics for each country, including Device Type, IP Vers
 1.  **For the metrics Device Type, IP Version, HTTP Version, TLS Version, and OS:**
     * Create a single Markdown table for each metric.
     * The first column of the table should be the metric's name (e.g., Device Type, IP Version, etc.).
-    * The subsequent columns should be the name of each country found in the data (e.g., Indonesia, Laos, Malaysia).
+    * The subsequent columns should be the name of each country found in the data.
     * The rows should represent the different categories for that metric (e.g., mobile, desktop, IPv4, IPv6).
     * The cells should contain the percentage value for that category in each country.
     * Sort the rows in each table by the percentage value for the first country listed in the data, in descending order.
